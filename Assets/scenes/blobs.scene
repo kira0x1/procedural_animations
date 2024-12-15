@@ -1,0 +1,80 @@
+{
+  "__guid": "19b802ef-6eae-4d06-b66c-b775e3e8a6f9",
+  "GameObjects": [
+    {
+      "__guid": "ca68c168-ffa7-4d97-a4a6-d40f8218033f",
+      "Flags": 0,
+      "Name": "Camera",
+      "Position": "-300,0,0",
+      "Tags": "maincamera",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "4281bce5-856e-42a7-9d0f-591845d691e6",
+          "BackgroundColor": "0.2093,0.2093,0.2093,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "IsMainCamera": true,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        }
+      ]
+    },
+    {
+      "__guid": "aec73bdd-5735-424d-9f29-18c0bed12f4c",
+      "Flags": 0,
+      "Name": "Snek",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ProceduralBlobs",
+          "__guid": "110afbce-25f3-4d73-a656-4b50ce0405a1",
+          "Offset": 5,
+          "Resolution": 4,
+          "SegmentSize": [
+            1,
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 30,
+    "NetworkInterpolation": true,
+    "PhysicsSubSteps": 1,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "Metadata": {},
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "ResourceVersion": 2,
+  "Title": null,
+  "Description": null,
+  "__references": [],
+  "__version": 2
+}
