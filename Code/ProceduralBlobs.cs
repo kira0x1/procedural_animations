@@ -17,6 +17,8 @@ public sealed class ProceduralBlobs : Component
 
     private List<BodyNode> nodes = new List<BodyNode>();
 
+    private Body body = new Body();
+    private int startSegments = 3;
 
     private void RefreshBodyNodes()
     {
@@ -25,7 +27,8 @@ public sealed class ProceduralBlobs : Component
         for (int i = 0; i < Resolution; i++)
         {
             var node = new BodyNode();
-            node.SegmentSize = SegmentSize;
+
+            node.segmentSize = SegmentSize;
             var pos = anchorPos;
 
             // move to outer circle of anchor
@@ -33,36 +36,58 @@ public sealed class ProceduralBlobs : Component
             pos.y += SegmentSize * 3.2f;
 
             // add offsets
-            
+
             // offset by each segments radius
             pos.y += i * SegmentSize * 2.2f;
-            
+
             // add additional offset from offset variable
-            pos.y += i * Offset;
+            pos.y += (i + 1) * Offset;
 
 
-            node.Position = pos;
+            node.position = pos;
             // node.Position += i * Offset + 5f;
             nodes.Add(node);
         }
     }
 
+    protected override void OnStart()
+    {
+        body = new Body(Vector3.Zero, startSegments);
+    }
+
     protected override void OnUpdate()
     {
-        DisplayGizmos();
-        RefreshBodyNodes();
+        // DisplayGizmos();
+        // RefreshBodyNodes();
+        // DrawNodeGizmos();
 
+        UpdateAnchorPos();
+        body.SetHeadPos(anchorPos);
+
+        if (Input.Pressed("Slot1"))
+        {
+            body.AddNode(Vector3.Left * Offset);
+        }
+
+        if (Input.Pressed("Slot2"))
+        {
+            body.ClearNodes();
+        }
+
+        body.DrawBody();
+    }
+
+    private void DrawNodeGizmos()
+    {
         using (Gizmo.Scope("nodes"))
         {
             foreach (BodyNode node in nodes)
             {
                 Gizmo.Draw.Color = new Color(90f, 100f, 150f);
                 Gizmo.Draw.LineThickness = 2f;
-                Gizmo.Draw.LineCircle(node.Position, node.SegmentSize, sections: 128);
+                Gizmo.Draw.LineCircle(node.position, node.segmentSize, sections: 128);
             }
         }
-
-        UpdateAnchorPos();
     }
 
     private void UpdateAnchorPos()

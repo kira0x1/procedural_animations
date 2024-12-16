@@ -37,14 +37,9 @@
         {
           "__type": "ProceduralBlobs",
           "__guid": "110afbce-25f3-4d73-a656-4b50ce0405a1",
-          "Offset": 5,
-          "Resolution": 4,
-          "SegmentSize": [
-            1,
-            1,
-            2,
-            3
-          ]
+          "Offset": 4.58,
+          "Resolution": 5,
+          "SegmentSize": 3
         }
       ]
     },
