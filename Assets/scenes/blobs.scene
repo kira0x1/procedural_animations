@@ -47,6 +47,28 @@
           ]
         }
       ]
+    },
+    {
+      "__guid": "e9c61d84-ac93-4473-a9b4-5d1259c129d8",
+      "Flags": 0,
+      "Name": "Screen",
+      "Position": "-174.6736,-174.6736,247.0257",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "e1be12e9-6e21-4bc9-94e3-61d4e7f95875",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.PlayerUI",
+          "__guid": "31b5f9ad-cf82-4940-b225-f9d4873cc965"
+        }
+      ]
     }
   ],
   "SceneProperties": {
