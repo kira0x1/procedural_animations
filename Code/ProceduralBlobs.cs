@@ -6,12 +6,14 @@ public sealed class ProceduralBlobs : Component
     [Property, Range(1, 20)]
     private int Resolution { get; set; } = 4;
 
+    [Property, Range(0, 20)]
+    private float Speed { get; set; } = 5f;
 
     [Property, Range(0, 50f)]
     private float Offset { get; set; } = 5f;
 
-    [Property, Range(0, 20f)]
-    private float SegmentSize { get; set; } = 5f;
+    [Property, Range(0, 50f)]
+    private float DesiredDistance { get; set; } = 5f;
 
     private Vector3 anchorPos = Vector3.Zero;
 
@@ -19,36 +21,6 @@ public sealed class ProceduralBlobs : Component
 
     private Body body = new Body();
     private int startSegments = 3;
-
-    private void RefreshBodyNodes()
-    {
-        nodes.Clear();
-
-        for (int i = 0; i < Resolution; i++)
-        {
-            var node = new BodyNode();
-
-            node.segmentSize = SegmentSize;
-            var pos = anchorPos;
-
-            // move to outer circle of anchor
-            // Add the radius of anchor
-            pos.y += SegmentSize * 3.2f;
-
-            // add offsets
-
-            // offset by each segments radius
-            pos.y += i * SegmentSize * 2.2f;
-
-            // add additional offset from offset variable
-            pos.y += (i + 1) * Offset;
-
-
-            node.position = pos;
-            // node.Position += i * Offset + 5f;
-            nodes.Add(node);
-        }
-    }
 
     protected override void OnStart()
     {
@@ -62,6 +34,10 @@ public sealed class ProceduralBlobs : Component
         // DrawNodeGizmos();
 
         UpdateAnchorPos();
+
+        body.SetOffset(Offset);
+        body.SetDesiredDistance(DesiredDistance);
+        body.SetSpeed(Speed);
         body.SetHeadPos(anchorPos);
 
         if (Input.Pressed("Slot1"))
@@ -103,13 +79,6 @@ public sealed class ProceduralBlobs : Component
     private void DisplayGizmos()
     {
         var pointPos = new Vector3(0, -60f, 30f);
-
-        using (Gizmo.Scope("anchor"))
-        {
-            Gizmo.Draw.Color = new Color(130f, 20f, 100f);
-            Gizmo.Draw.LineThickness = 3f;
-            Gizmo.Draw.LineCircle(anchorPos, SegmentSize * 2f, sections: 128);
-        }
 
         using (Gizmo.Scope("point"))
         {

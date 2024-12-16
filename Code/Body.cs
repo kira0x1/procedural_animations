@@ -22,6 +22,30 @@ public class Body
         }
     }
 
+    public void SetSpeed(float speed)
+    {
+        foreach (BodyNode node in Nodes)
+        {
+            node.Speed = speed;
+        }
+    }
+
+    public void SetOffset(float offset)
+    {
+        foreach (BodyNode node in Nodes)
+        {
+            node.offset = offset;
+        }
+    }
+
+    public void SetDesiredDistance(float desiredDistance)
+    {
+        foreach (BodyNode node in Nodes)
+        {
+            node.desiredDistance = desiredDistance;
+        }
+    }
+
     public void AddNode(BodyNode node)
     {
         var prevNode = Nodes.Count == 0 ? HeadNode : Nodes[^1];
@@ -37,11 +61,12 @@ public class Body
         Nodes.Add(node);
     }
 
-    public void AddNode(Vector3 offset)
+    public void AddNode(Vector3 offset, float desiredDistance = 3f)
     {
         var prevNode = Nodes.Count == 0 ? HeadNode : Nodes[^1];
         var pos = prevNode.position + offset;
         BodyNode node = new BodyNode(pos, prevNode);
+        node.desiredDistance = desiredDistance;
         node.UpdatePosition();
         Nodes.Add(node);
     }
@@ -77,7 +102,6 @@ public class Body
             node.DrawNode();
 
             var endPos = node.anchor.position;
-
 
             using (Gizmo.Scope("line"))
             {

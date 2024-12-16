@@ -1,15 +1,19 @@
 ﻿namespace Kira;
 
+using System;
+
 public class BodyNode
 {
     public Vector3 position;
-    private Vector3 startPosition;
 
     public float segmentSize = 1f;
+    public float desiredDistance = 1f;
+    public float offset = 1f;
 
-    public float desiredDistance;
     public BodyNode anchor;
     private Vector3 anchorPoint;
+
+    public float Speed { get; set; } = 3f;
 
     public BodyNode()
     {
@@ -18,14 +22,12 @@ public class BodyNode
     public BodyNode(Vector3 position, float desiredDistance = 3f)
     {
         this.position = position;
-        this.startPosition = position;
         this.desiredDistance = desiredDistance;
     }
 
     public BodyNode(Vector3 position, BodyNode anchor, float desiredDistance = 3f)
     {
         this.position = position;
-        this.startPosition = position;
         this.anchor = anchor;
         this.desiredDistance = desiredDistance;
     }
@@ -47,19 +49,24 @@ public class BodyNode
     /// </summary>
     public void UpdatePosition()
     {
-        // var dir = CalculateDirection();
         UpdateAnchorPoint();
-        var pos = anchor.position;
-
-        // offset
-        pos += Vector3.Left * 10f;
-        // pos.y -= dir.y;
 
         var dir = Vector3.Direction(anchorPoint, anchor.position);
-        var targetPos = Vector3.Lerp(anchorPoint, anchor.position, 0.5f);
+        // var targetPos = anchor.position - dir * desiredDistance * 2f;
+        var targetPos = anchor.position - dir * (desiredDistance * offset + 1f);
 
-        Gizmo.Draw.LineSphere(targetPos, 1f);
-        position = Vector3.Lerp(position,targetPos, 5f * Time.Delta);
+        Gizmo.Draw.Arrow(position, targetPos, 2f, 1f);
+        // Gizmo.Draw.LineSphere(targetPos, 1f);
+
+
+        float dist = Vector3.DistanceBetween(position.WithX(0f), anchor.position.WithX(0f));
+
+        if (dist < desiredDistance)
+        {
+            position = anchor.position - dir * desiredDistance;
+        }
+
+        position = Vector3.Lerp(position, targetPos, Speed * Time.Delta);
     }
 
     public Vector3 CalculateDirection()
@@ -69,7 +76,7 @@ public class BodyNode
         return res;
     }
 
-    public void DrawNode()
+    public void DrawNode(float radius = 3f)
     {
         UpdateAnchorPoint();
 
@@ -87,7 +94,7 @@ public class BodyNode
         {
             Gizmo.Draw.Color = Gizmo.Colors.Blue;
             var pos = position;
-            Gizmo.Draw.LineCircle(pos, 0.5f);
+            // Gizmo.Draw.LineCircle(pos, desiredDistance / 4f);
         }
 
         // draw anchor point
@@ -95,7 +102,7 @@ public class BodyNode
         {
             Gizmo.Draw.Color = Gizmo.Colors.Active;
             Gizmo.Draw.LineThickness = 1f;
-            Gizmo.Draw.LineCircle(anchorPoint, 1f);
+            Gizmo.Draw.LineCircle(anchorPoint, desiredDistance / 3f);
         }
     }
 }
