@@ -37,9 +37,10 @@
         {
           "__type": "ProceduralBlobs",
           "__guid": "110afbce-25f3-4d73-a656-4b50ce0405a1",
-          "Offset": 4.58,
+          "DesiredDistance": 3,
+          "Offset": 2,
           "Resolution": 5,
-          "SegmentSize": 3
+          "Speed": 5
         }
       ]
     },
@@ -62,6 +63,19 @@
         {
           "__type": "Sandbox.PlayerUI",
           "__guid": "31b5f9ad-cf82-4940-b225-f9d4873cc965"
+        }
+      ]
+    },
+    {
+      "__guid": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+      "Flags": 0,
+      "Name": "Body",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Kira.Proc.ProcBody",
+          "__guid": "d957108f-ec80-47d0-9840-973261f91c0f",
+          "Skeleton": []
         }
       ]
     }
