@@ -1,7 +1,5 @@
 ﻿namespace Kira.Procgen.Editor;
 
-[EditorTool]
-[Title("PBodyEditor")]
 [Icon("boy")]
 public class PbodyEditor : EditorTool<PBody>
 {
@@ -9,6 +7,10 @@ public class PbodyEditor : EditorTool<PBody>
     private int NodeCount { get; set; } = 0;
 
     public override void OnEnabled()
+    {
+    }
+
+    private void CreateWindow()
     {
         AllowGameObjectSelection = false;
 
@@ -53,7 +55,7 @@ public class PbodyEditor : EditorTool<PBody>
         Target.RefreshNodes();
     }
 
-    public override void OnUpdate()
+    private void UpdateGizmos()
     {
         if (!Target.IsValid()) return;
         if (!Target.SkeletonRoot.IsValid()) return;

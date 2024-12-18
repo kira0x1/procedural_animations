@@ -73,9 +73,40 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "Kira.Proc.ProcBody",
-          "__guid": "d957108f-ec80-47d0-9840-973261f91c0f",
+          "__type": "Kira.Procgen.PBody",
+          "__guid": "c2500887-0e32-4508-a8d5-7594065994a1",
           "Skeleton": []
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "5f90e64c-9de4-4f05-897b-b60d0bb71588",
+          "Flags": 0,
+          "Name": "skeleton",
+          "Enabled": true,
+          "Children": [
+            {
+              "__guid": "3859035e-e806-4799-ab25-c825d783a8e1",
+              "Flags": 0,
+              "Name": "node",
+              "Position": "-8.383035,63.39759,0",
+              "Enabled": true
+            },
+            {
+              "__guid": "3ecc7ed0-0ef9-4116-bf68-f692d5b4290b",
+              "Flags": 0,
+              "Name": "node",
+              "Position": "-67.34672,0,0",
+              "Enabled": true
+            },
+            {
+              "__guid": "423106c8-c73e-4c6c-823b-2f8d1d55796c",
+              "Flags": 0,
+              "Name": "node",
+              "Position": "81.71307,0,0",
+              "Enabled": true
+            }
+          ]
         }
       ]
     }
