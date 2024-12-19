@@ -1,5 +1,7 @@
 ﻿namespace Kira.Procgen.Editor;
 
+using System;
+
 [EditorTool]
 [Title("PBodyEditor")]
 [Icon("boy")]
@@ -13,6 +15,8 @@ public class PBodyEditorWidget : EditorTool
 
     private WidgetWindow window;
     private WidgetWindow editWindow;
+    //todo brushWindow
+
     private Label nodesLabel;
 
     public override void OnEnabled()
@@ -37,26 +41,28 @@ public class PBodyEditorWidget : EditorTool
 
             using (Gizmo.Scope($"node{i}"))
             {
+                Gizmo.Draw.Color = Gizmo.HasSelected ? Color.Cyan : Color.White;
                 Gizmo.Transform = new Transform(node.Position, Rotation.Identity);
 
-                // Gizmo.Control.DragBox("db", node.Position, node.Rotation, out Vector3 newPos);
                 Gizmo.Control.Position("pos", node.Position, out Vector3 newPos, squareSize: 2.5f);
+
                 Gizmo.Control.Sphere("rd", node.DesiredDistance, out float radius, Color.Magenta);
                 node.DesiredDistance = radius.Clamp(5f, 50f);
 
                 var nodePos = node.Position;
                 nodePos.z -= 3;
                 Gizmo.Draw.ScreenText($"{i}", Camera.ToScreen(nodePos), "Poppins", 22, TextFlag.CenterTop);
-                // Log.Info(node.Position);
+
                 node.SetPosition(newPos);
+
+                // Gizmo.Control.BoundingBox("drag", BBox.FromPositionAndSize(node.GameObject.WorldTransform.NormalToLocal(Vector3.Zero), node.DesiredDistance), out BBox box);
             }
         }
     }
 
     public override void OnSelectionChanged()
     {
-        var goSelected = (GameObject)Selection.First();
-
+        var goSelected = (GameObject)Selection.FirstOrDefault();
         Target = GetSelectedComponent<PBody>();
 
         if (goSelected.IsValid() && !Target.IsValid())
@@ -86,8 +92,6 @@ public class PBodyEditorWidget : EditorTool
 
     private void CreateWindow()
     {
-        AllowGameObjectSelection = false;
-
         // create a widget window. This is a window that  
         // can be dragged around in the scene view
         window = new WidgetWindow(SceneOverlay, "Body");
@@ -150,17 +154,6 @@ public class PBodyEditorWidget : EditorTool
         editWindow.Position = pos;
     }
 
-    private void SwapToCreate()
-    {
-        CreateLayout.Enabled = true;
-        editWindow.Visible = false;
-    }
-
-    private void SwapToEdit()
-    {
-        editWindow.Visible = true;
-    }
-
     private void UpdateNodeLabel()
     {
         NodeCount = Target.IsValid() ? Target.Nodes.Count : 0;
@@ -170,6 +163,10 @@ public class PBodyEditorWidget : EditorTool
             nodesLabel.Text = $"Nodes: {NodeCount}";
             window.Update();
         }
+    }
+
+    private void AddChildNode()
+    {
     }
 
     private void AddNode()
@@ -199,5 +196,16 @@ public class PBodyEditorWidget : EditorTool
         }
 
         UpdateNodeLabel();
+    }
+
+    private void SwapToCreate()
+    {
+        CreateLayout.Enabled = true;
+        editWindow.Visible = false;
+    }
+
+    private void SwapToEdit()
+    {
+        editWindow.Visible = true;
     }
 }

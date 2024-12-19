@@ -80,30 +80,16 @@
       ],
       "Children": [
         {
-          "__guid": "5f90e64c-9de4-4f05-897b-b60d0bb71588",
+          "__guid": "6a67119f-d2e5-45e2-8cf7-262b5c7bafcb",
           "Flags": 0,
           "Name": "skeleton",
           "Enabled": true,
           "Children": [
             {
-              "__guid": "3859035e-e806-4799-ab25-c825d783a8e1",
+              "__guid": "12956d2a-dc09-4940-8a55-4843363606fe",
               "Flags": 0,
-              "Name": "node",
-              "Position": "-8.383035,63.39759,0",
-              "Enabled": true
-            },
-            {
-              "__guid": "3ecc7ed0-0ef9-4116-bf68-f692d5b4290b",
-              "Flags": 0,
-              "Name": "node",
-              "Position": "-67.34672,0,0",
-              "Enabled": true
-            },
-            {
-              "__guid": "423106c8-c73e-4c6c-823b-2f8d1d55796c",
-              "Flags": 0,
-              "Name": "node",
-              "Position": "81.71307,0,0",
+              "Name": "node_0",
+              "Position": "-31.40256,24.00857,0",
               "Enabled": true
             }
           ]

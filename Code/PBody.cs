@@ -1,7 +1,6 @@
 namespace Kira.Procgen;
 
 using System.Numerics;
-using Sandbox;
 using Vector3 = Vector3;
 
 [Icon("boy")]
@@ -21,8 +20,14 @@ public sealed class PBody : Component
 
     public void AddNode()
     {
-        var nodeGo = new GameObject(SkeletonRoot, true, "node");
-        var node = new PNode();
+        if (!SkeletonRoot.IsValid())
+        {
+            CreateSkeleton();
+        }
+
+        var nodeGo = new GameObject(SkeletonRoot, true, $"node_{Nodes.Count}");
+        var node = new PNode(nodeGo, Nodes.Count);
+
         node.Position = nodeGo.LocalPosition;
         node.Rotation = nodeGo.LocalRotation;
         node.GameObject = nodeGo;
@@ -33,9 +38,10 @@ public sealed class PBody : Component
     {
         Nodes.Clear();
 
-        foreach (GameObject node in SkeletonRoot.Children)
+        for (var i = 0; i < SkeletonRoot.Children.Count; i++)
         {
-            var pn = new PNode();
+            GameObject node = SkeletonRoot.Children[i];
+            var pn = new PNode(node, i);
             pn.Position = node.LocalPosition;
             pn.Rotation = node.LocalRotation;
             pn.GameObject = node;
@@ -43,11 +49,19 @@ public sealed class PBody : Component
         }
     }
 
+    protected override void DrawGizmos()
+    {
+        for (var i = 0; i < Nodes.Count; i++)
+        {
+            Nodes[i].DrawGizmos();
+        }
+    }
+
     public void ClearNodes()
     {
-        foreach (GameObject skeletonChild in SkeletonRoot.Children)
+        if (SkeletonRoot.IsValid())
         {
-            skeletonChild.Destroy();
+            SkeletonRoot.Destroy();
         }
 
         Nodes.Clear();
@@ -60,11 +74,24 @@ public class PNode
     public Quaternion Rotation { get; set; }
     public GameObject GameObject { get; set; }
 
+    public int Id { get; set; }
     public float DesiredDistance { get; set; } = 4f;
+
+    public PNode(GameObject gameObject, int id = 0)
+    {
+        this.Id = id;
+        this.GameObject = gameObject;
+    }
 
     public void UpdateTransform()
     {
         Position = GameObject.LocalPosition;
+    }
+
+    public void DrawGizmos()
+    {
+        Gizmo.Draw.ScreenText($"{Id}", Gizmo.Camera.ToScreen(Position), "Poppins", 22, TextFlag.CenterTop);
+        Gizmo.Control.BoundingBox("n", BBox.FromPositionAndSize(Position, 10f), out BBox box);
     }
 
     public void SetPosition(Vector3 position)
