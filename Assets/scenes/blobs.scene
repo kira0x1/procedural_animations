@@ -37,9 +37,10 @@
         {
           "__type": "ProceduralBlobs",
           "__guid": "110afbce-25f3-4d73-a656-4b50ce0405a1",
-          "Offset": 4.58,
+          "DesiredDistance": 3,
+          "Offset": 2,
           "Resolution": 5,
-          "SegmentSize": 3
+          "Speed": 5
         }
       ]
     },
@@ -62,6 +63,36 @@
         {
           "__type": "Sandbox.PlayerUI",
           "__guid": "31b5f9ad-cf82-4940-b225-f9d4873cc965"
+        }
+      ]
+    },
+    {
+      "__guid": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+      "Flags": 0,
+      "Name": "Body",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Kira.Procgen.PBody",
+          "__guid": "c2500887-0e32-4508-a8d5-7594065994a1",
+          "Skeleton": []
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "6a67119f-d2e5-45e2-8cf7-262b5c7bafcb",
+          "Flags": 0,
+          "Name": "skeleton",
+          "Enabled": true,
+          "Children": [
+            {
+              "__guid": "12956d2a-dc09-4940-8a55-4843363606fe",
+              "Flags": 0,
+              "Name": "node_0",
+              "Position": "-31.40256,24.00857,0",
+              "Enabled": true
+            }
+          ]
         }
       ]
     }
