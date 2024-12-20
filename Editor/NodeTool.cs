@@ -6,7 +6,7 @@ public class NodeTool : EditorTool<ProceduralBlobs>
 
     public override void OnEnabled()
     {
-        CreateWindow();
+        // CreateWindow();
     }
 
     public override void OnUpdate()

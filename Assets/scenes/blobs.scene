@@ -70,26 +70,314 @@
       "__guid": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
       "Flags": 0,
       "Name": "Body",
+      "Position": "70.90634,0,0",
       "Enabled": true,
       "Components": [
         {
           "__type": "Kira.Procgen.PBody",
           "__guid": "c2500887-0e32-4508-a8d5-7594065994a1",
-          "Skeleton": []
+          "Descendants": [
+            {
+              "Name": "node_0",
+              "Position": "95.23736,-95.29942,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "ca552f48-5faa-4e43-8632-d6642ae7ed8e"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "166.1437,-95.29942,0",
+              "LocalPos": "95.23736,-95.29942,0",
+              "Id": 0,
+              "DesiredDistance": 4,
+              "HasParent": false,
+              "NodeName": null,
+              "Children": [
+                {
+                  "Name": "c_node_0",
+                  "Position": "201.4854,-22.72667,0",
+                  "Rotation": {
+                    "IsIdentity": false
+                  },
+                  "GameObject": {
+                    "_type": "gameobject",
+                    "go": "997efe72-5435-46a4-b80d-6c2847360284"
+                  },
+                  "Body": {
+                    "_type": "component",
+                    "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                    "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                    "component_type": "PBody"
+                  },
+                  "WorldPos": "367.6291,-118.0261,0",
+                  "LocalPos": "201.4854,-22.72667,0",
+                  "Id": 0,
+                  "DesiredDistance": 4,
+                  "HasParent": true,
+                  "NodeName": null,
+                  "Children": [
+                    {
+                      "Name": "c_node_0",
+                      "Position": "314.937,-98.37685,0",
+                      "Rotation": {
+                        "IsIdentity": false
+                      },
+                      "GameObject": {
+                        "_type": "gameobject",
+                        "go": "301ee3d4-d458-438e-97b7-cc85bb65d512"
+                      },
+                      "Body": {
+                        "_type": "component",
+                        "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                        "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                        "component_type": "PBody"
+                      },
+                      "WorldPos": "682.5661,-216.4029,0",
+                      "LocalPos": "314.937,-98.37685,0",
+                      "Id": 0,
+                      "DesiredDistance": 4,
+                      "HasParent": true,
+                      "NodeName": null,
+                      "Children": []
+                    }
+                  ]
+                },
+                {
+                  "Name": "c_node_1",
+                  "Position": "177.5708,-164.0912,0",
+                  "Rotation": {
+                    "IsIdentity": false
+                  },
+                  "GameObject": {
+                    "_type": "gameobject",
+                    "go": "e20f9f58-8fa0-4e25-ac19-4610b9bd5d6b"
+                  },
+                  "Body": {
+                    "_type": "component",
+                    "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                    "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                    "component_type": "PBody"
+                  },
+                  "WorldPos": "343.7145,-259.3906,0",
+                  "LocalPos": "177.5708,-164.0912,0",
+                  "Id": 1,
+                  "DesiredDistance": 4,
+                  "HasParent": true,
+                  "NodeName": null,
+                  "Children": []
+                }
+              ]
+            },
+            {
+              "Name": "c_node_0",
+              "Position": "201.4854,-22.72667,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "997efe72-5435-46a4-b80d-6c2847360284"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "367.6291,-118.0261,0",
+              "LocalPos": "201.4854,-22.72667,0",
+              "Id": 0,
+              "DesiredDistance": 4,
+              "HasParent": true,
+              "NodeName": null,
+              "Children": [
+                {
+                  "Name": "c_node_0",
+                  "Position": "314.937,-98.37685,0",
+                  "Rotation": {
+                    "IsIdentity": false
+                  },
+                  "GameObject": {
+                    "_type": "gameobject",
+                    "go": "301ee3d4-d458-438e-97b7-cc85bb65d512"
+                  },
+                  "Body": {
+                    "_type": "component",
+                    "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                    "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                    "component_type": "PBody"
+                  },
+                  "WorldPos": "682.5661,-216.4029,0",
+                  "LocalPos": "314.937,-98.37685,0",
+                  "Id": 0,
+                  "DesiredDistance": 4,
+                  "HasParent": true,
+                  "NodeName": null,
+                  "Children": []
+                }
+              ]
+            },
+            {
+              "Name": "c_node_0",
+              "Position": "314.937,-98.37685,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "301ee3d4-d458-438e-97b7-cc85bb65d512"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "682.5661,-216.4029,0",
+              "LocalPos": "314.937,-98.37685,0",
+              "Id": 0,
+              "DesiredDistance": 4,
+              "HasParent": true,
+              "NodeName": null,
+              "Children": []
+            },
+            {
+              "Name": "node_3",
+              "Position": "96.28752,89.89845,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "2cd987ae-f981-49ee-a94d-d97f852a5312"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "167.1939,89.89845,0",
+              "LocalPos": "96.28752,89.89845,0",
+              "Id": 3,
+              "DesiredDistance": 4,
+              "HasParent": false,
+              "NodeName": null,
+              "Children": []
+            },
+            {
+              "Name": "c_node_1",
+              "Position": "177.5708,-164.0912,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "e20f9f58-8fa0-4e25-ac19-4610b9bd5d6b"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "343.7145,-259.3906,0",
+              "LocalPos": "177.5708,-164.0912,0",
+              "Id": 1,
+              "DesiredDistance": 4,
+              "HasParent": true,
+              "NodeName": null,
+              "Children": []
+            },
+            {
+              "Name": "node_5",
+              "Position": "-66.34649,70.8707,0",
+              "Rotation": {
+                "IsIdentity": false
+              },
+              "GameObject": {
+                "_type": "gameobject",
+                "go": "9068df33-18c0-4655-90df-b998a8bbc77e"
+              },
+              "Body": {
+                "_type": "component",
+                "component_id": "c2500887-0e32-4508-a8d5-7594065994a1",
+                "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
+                "component_type": "PBody"
+              },
+              "WorldPos": "4.559853,70.8707,0",
+              "LocalPos": "-66.34649,70.8707,0",
+              "Id": 5,
+              "DesiredDistance": 4,
+              "HasParent": false,
+              "NodeName": null,
+              "Children": []
+            }
+          ],
+          "SkeletonRoot": {
+            "_type": "gameobject",
+            "go": "6835ef47-bed3-4938-ba7f-4bc682aabbf6"
+          }
         }
       ],
       "Children": [
         {
-          "__guid": "6a67119f-d2e5-45e2-8cf7-262b5c7bafcb",
+          "__guid": "6835ef47-bed3-4938-ba7f-4bc682aabbf6",
           "Flags": 0,
           "Name": "skeleton",
           "Enabled": true,
           "Children": [
             {
-              "__guid": "12956d2a-dc09-4940-8a55-4843363606fe",
+              "__guid": "ca552f48-5faa-4e43-8632-d6642ae7ed8e",
               "Flags": 0,
               "Name": "node_0",
-              "Position": "-31.40256,24.00857,0",
+              "Position": "95.23736,-95.29942,0",
+              "Enabled": true,
+              "Children": [
+                {
+                  "__guid": "997efe72-5435-46a4-b80d-6c2847360284",
+                  "Flags": 0,
+                  "Name": "c_node_0",
+                  "Position": "201.4854,-22.72667,0",
+                  "Enabled": true,
+                  "Children": [
+                    {
+                      "__guid": "301ee3d4-d458-438e-97b7-cc85bb65d512",
+                      "Flags": 0,
+                      "Name": "c_node_0",
+                      "Position": "314.937,-98.37685,0",
+                      "Enabled": true
+                    }
+                  ]
+                },
+                {
+                  "__guid": "e20f9f58-8fa0-4e25-ac19-4610b9bd5d6b",
+                  "Flags": 0,
+                  "Name": "c_node_1",
+                  "Position": "177.5708,-164.0912,0",
+                  "Enabled": true
+                }
+              ]
+            },
+            {
+              "__guid": "2cd987ae-f981-49ee-a94d-d97f852a5312",
+              "Flags": 0,
+              "Name": "node_3",
+              "Position": "96.28752,89.89845,0",
+              "Enabled": true
+            },
+            {
+              "__guid": "9068df33-18c0-4655-90df-b998a8bbc77e",
+              "Flags": 0,
+              "Name": "node_5",
+              "Position": "-66.34649,70.8707,0",
               "Enabled": true
             }
           ]
