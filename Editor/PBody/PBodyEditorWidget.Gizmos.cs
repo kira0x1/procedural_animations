@@ -9,20 +9,19 @@ public partial class PBodyEditorWidget
             return;
         }
 
-
         for (var i = 0; i < Target.Descendants.Count; i++)
         {
             PNode node = Target.Descendants[i];
             if (node == null) return;
 
+
             using (Gizmo.Scope($"node{i}"))
             {
                 node.DrawGizmos();
-
-                Gizmo.Draw.Color = Gizmo.HasSelected ? Color.Cyan : Color.White;
                 Gizmo.Transform = new Transform(node.Position, Rotation.Identity);
+                Gizmo.Draw.Color = Gizmo.HasSelected ? Color.Cyan : Color.White;
 
-                if (Selection.Contains(node.GameObject))
+                if (drawHandlesCheckbox.Value || Selection.Contains(node.GameObject))
                 {
                     Gizmo.Control.Position("pos", node.Position, out Vector3 newPos, squareSize: 2.5f);
 

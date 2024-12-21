@@ -73,12 +73,15 @@ public class PNode
     public void DrawGizmos()
     {
         float fontSize = HasParent ? 16f : 22f;
-        Gizmo.Draw.ScreenText(NodeName, Gizmo.Camera.ToScreen(LocalPos - new Vector3(0, 0, DesiredDistance * 1.1f)), "Poppins", fontSize, TextFlag.CenterTop);
+        using (Gizmo.Scope("node_text"))
+        {
+            Gizmo.Draw.Color = HasParent ? Color.White : new Color(0.2f, 0.71f, 0.8f);
+            Gizmo.Draw.ScreenText(GameObject.Name, Gizmo.Camera.ToScreen(LocalPos - new Vector3(0, 0, DesiredDistance * 1.1f)), "Poppins", fontSize, TextFlag.CenterTop);
+        }
 
         foreach (PNode node in Children)
         {
             node.DrawGizmos();
-            // Gizmo.Draw.LineSphere(node.LocalPos, 10f);
         }
     }
 

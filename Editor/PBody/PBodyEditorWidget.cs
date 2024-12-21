@@ -14,6 +14,7 @@ public partial class PBodyEditorWidget : EditorTool
 
     private WidgetWindow window;
     private WidgetWindow editWindow;
+    private Checkbox drawHandlesCheckbox;
     //todo brushWindow
 
     private PNode nodeSelected;
@@ -53,7 +54,11 @@ public partial class PBodyEditorWidget : EditorTool
         // Refresh Button
         var refreshBtn = new Button("Refresh");
         refreshBtn.Pressed = () => RefreshNodes();
-        btnsContainer.AddCell(1, 0, refreshBtn);
+        btnsContainer.AddCell(1, 1, refreshBtn);
+
+        // Toggle Handles
+        drawHandlesCheckbox = new Checkbox("Toggle Handles");
+        btnsContainer.AddCell(1, 0, drawHandlesCheckbox);
 
         // Clear Button
         var clearBtn = new Button("Clear");
