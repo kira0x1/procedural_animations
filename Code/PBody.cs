@@ -39,8 +39,8 @@ public sealed class PBody : Component
             CreateSkeleton();
         }
 
-        var nodeGo = new GameObject(SkeletonRoot, true, $"node_{Descendants.Count}");
-        var node = new PNode(nodeGo, this, Descendants.Count);
+        var nodeGo = new GameObject(SkeletonRoot, true, $"node_{SkeletonRoot.Children.Count}");
+        var node = new PNode(nodeGo, this, SkeletonRoot.Children.Count);
 
         node.Position = nodeGo.LocalPosition;
         node.Rotation = nodeGo.LocalRotation;
@@ -63,7 +63,7 @@ public sealed class PBody : Component
         for (var i = 0; i < SkeletonRoot.Children.Count; i++)
         {
             GameObject node = SkeletonRoot.Children[i];
-            var pn = new PNode(node, this, i);
+            var pn = new PNode(node, this, GameObject.Children.Count);
             pn.Position = node.LocalPosition;
             pn.Rotation = node.LocalRotation;
             pn.GameObject = node;
@@ -74,12 +74,6 @@ public sealed class PBody : Component
 
     protected override void DrawGizmos()
     {
-        for (var i = 0; i < Descendants.Count; i++)
-        {
-            var node = Descendants[i];
-            if (node != null)
-                Descendants[i].DrawGizmos();
-        }
     }
 
     public void ClearNodes()

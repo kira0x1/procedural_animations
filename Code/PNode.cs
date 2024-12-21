@@ -78,7 +78,7 @@ public class PNode
         foreach (PNode node in Children)
         {
             node.DrawGizmos();
-            Gizmo.Draw.LineSphere(node.LocalPos, 10f);
+            // Gizmo.Draw.LineSphere(node.LocalPos, 10f);
         }
     }
 
@@ -90,7 +90,7 @@ public class PNode
 
     public void AddChild()
     {
-        var nodeGo = new GameObject(this.GameObject, true, $"c_node_{Children.Count}");
+        var nodeGo = new GameObject(this.GameObject, true, $"c_node_{GameObject.Children.Count}");
         nodeGo.LocalPosition = LocalPos;
 
         var node = new PNode(nodeGo, Body, Children.Count);

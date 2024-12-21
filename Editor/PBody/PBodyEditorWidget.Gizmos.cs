@@ -17,6 +17,8 @@ public partial class PBodyEditorWidget
 
             using (Gizmo.Scope($"node{i}"))
             {
+                node.DrawGizmos();
+
                 Gizmo.Draw.Color = Gizmo.HasSelected ? Color.Cyan : Color.White;
                 Gizmo.Transform = new Transform(node.Position, Rotation.Identity);
 
