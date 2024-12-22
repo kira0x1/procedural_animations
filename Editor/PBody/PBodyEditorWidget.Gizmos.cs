@@ -9,6 +9,13 @@ public partial class PBodyEditorWidget
             return;
         }
 
+        using (Gizmo.Scope("RootControl"))
+        {
+            Gizmo.Transform = new Transform(Target.WorldPosition);
+            Gizmo.Control.Position("rootPos", Target.LocalPosition, out Vector3 rootPos);
+            Target.WorldPosition = rootPos;
+        }
+
         for (var i = 0; i < Target.Descendants.Count; i++)
         {
             PNode node = Target.Descendants[i];
@@ -45,7 +52,7 @@ public partial class PBodyEditorWidget
             {
                 if (!node.HasParent)
                 {
-                    var capsule = new Capsule(node.LocalPos, Target.SkeletonRoot.LocalPosition, 5f);
+                    var capsule = new Capsule(node.LocalPos, Target.SkeletonRoot.WorldPosition, 5f);
                     Gizmo.Draw.LineCapsule(capsule);
                 }
             }

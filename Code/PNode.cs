@@ -70,9 +70,62 @@ public class PNode
         Children.Remove(node);
     }
 
+
+    private Vector3 GetAnchorPoint()
+    {
+        var center = GameObject.LocalPosition;
+        var dir = Vector3.Direction(GameObject.LocalPosition, GameObject.Parent.LocalPosition);
+        Vector3 res = dir * DesiredDistance;
+        var anchorPoint = center + res;
+        return anchorPoint;
+    }
+
+    /// <summary>
+    /// Updates the nodes constrained position relative to its anchor 
+    /// </summary>
+    public void UpdatePosition()
+    {
+        var pos = GameObject.LocalPosition;
+        var anchor = Body;
+        var dir = Vector3.Direction(GetAnchorPoint(), anchor.LocalPosition);
+        // var targetPos = anchor.position - dir * desiredDistance * 2f;
+
+        const float offset = 1f;
+        var targetPos = anchor.LocalPosition - dir * (DesiredDistance * offset + 1f);
+
+        Gizmo.Draw.Arrow(pos, targetPos, 2f, 1f);
+        // Gizmo.Draw.LineSphere(targetPos, 1f);
+
+
+        float dist = Vector3.DistanceBetween(pos.WithX(0f), anchor.LocalPosition.WithX(0f));
+
+        if (dist < DesiredDistance)
+        {
+            pos = anchor.LocalPosition - dir * DesiredDistance;
+        }
+
+        const float Speed = 2f;
+        Position = Vector3.Lerp(pos, targetPos, Speed * Time.Delta);
+    }
+
     public void DrawGizmos()
     {
         float fontSize = HasParent ? 16f : 22f;
+
+        using (Gizmo.Scope("lines"))
+        {
+            if (!HasParent)
+            {
+                // Gizmo.Draw.Line(LocalPos, Body.SkeletonRoot.WorldPosition);
+            }
+
+            foreach (PNode cnode in Children)
+            {
+                // Gizmo.Draw.Line(LocalPos, cnode.LocalPos);
+            }
+        }
+
+
         using (Gizmo.Scope("node_text"))
         {
             Gizmo.Draw.Color = HasParent ? Color.White : new Color(0.2f, 0.71f, 0.8f);

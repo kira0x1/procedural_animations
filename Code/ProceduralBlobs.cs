@@ -1,4 +1,5 @@
 using Kira;
+using Kira.Procgen;
 
 [Category("Kira")]
 public sealed class ProceduralBlobs : Component
@@ -9,22 +10,22 @@ public sealed class ProceduralBlobs : Component
     [Property, Range(0, 20)]
     private float Speed { get; set; } = 5f;
 
-    [Property, Range(0, 50f)]
+    [Property, Range(0, 10f)]
     private float Offset { get; set; } = 5f;
 
-    [Property, Range(0, 50f)]
+    [Property, Range(0, 10f)]
     private float DesiredDistance { get; set; } = 5f;
 
     private Vector3 anchorPos = Vector3.Zero;
 
+    [Property]
+    private PBody Body { get; set; }
     private List<BodyNode> nodes = new List<BodyNode>();
 
     private Body body = new Body();
-    private int startSegments = 3;
 
     protected override void OnStart()
     {
-        body = new Body(Vector3.Zero, startSegments);
     }
 
     protected override void OnUpdate()
@@ -51,6 +52,10 @@ public sealed class ProceduralBlobs : Component
         }
 
         body.DrawBody();
+    }
+
+    protected override void DrawGizmos()
+    {
     }
 
     private void DrawNodeGizmos()
@@ -96,8 +101,7 @@ public sealed class ProceduralBlobs : Component
         using (Gizmo.Scope("innerPoint"))
         {
             // var dir = anchorPos + pointPos.Normal * 10f;
-            var dir = pointPos - anchorPos;
-            dir = anchorPos + Vector3.Direction(anchorPos, pointPos) * 10f;
+            Vector3 dir = anchorPos + Vector3.Direction(anchorPos, pointPos) * 10f;
             Gizmo.Draw.LineThickness = 3f;
             Gizmo.Draw.IgnoreDepth = true;
             Gizmo.Draw.Line(anchorPos, dir);

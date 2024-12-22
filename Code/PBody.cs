@@ -32,6 +32,14 @@ public sealed class PBody : Component
         SkeletonRoot = skel;
     }
 
+    protected override void OnUpdate()
+    {
+        foreach (PNode node in Descendants)
+        {
+            node.UpdatePosition();
+        }
+    }
+
     public void AddNode()
     {
         if (!SkeletonRoot.IsValid())
@@ -70,10 +78,6 @@ public sealed class PBody : Component
 
             Descendants.Add(pn);
         }
-    }
-
-    protected override void DrawGizmos()
-    {
     }
 
     public void ClearNodes()
