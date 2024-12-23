@@ -36,11 +36,11 @@ public sealed class PBody : Component
     {
         foreach (PNode node in Descendants)
         {
-            node.UpdatePosition();
+            // node.UpdatePosition();
         }
     }
 
-    public void AddNode()
+    public PNode AddNode()
     {
         if (!SkeletonRoot.IsValid())
         {
@@ -55,6 +55,8 @@ public sealed class PBody : Component
         node.GameObject = nodeGo;
 
         Descendants.Add(node);
+
+        return node;
     }
 
     public void DeleteNode(PNode node)

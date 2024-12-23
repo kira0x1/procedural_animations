@@ -1,9 +1,22 @@
 ﻿namespace Kira.Procgen.Editor;
 
+using System;
+
+public enum BoneDisplayMode
+{
+    Capsule,
+    Line
+}
+
 public partial class PBodyEditorWidget
 {
+    public BoneDisplayMode boneDisplayMode { get; set; } = BoneDisplayMode.Line;
+
+
     public override void OnUpdate()
     {
+        Gizmo.Settings.GizmosEnabled = hideOtherGizmosCheckbox.State != CheckState.On;
+
         if (!HasCreatedWindow || !Target.IsValid())
         {
             return;
@@ -20,7 +33,6 @@ public partial class PBodyEditorWidget
         {
             PNode node = Target.Descendants[i];
             if (node == null) return;
-
 
             using (Gizmo.Scope($"node{i}"))
             {
@@ -43,8 +55,29 @@ public partial class PBodyEditorWidget
                     }
                 }
 
-                Gizmo.Control.Sphere("rd", node.DesiredDistance, out float radius, Color.Magenta);
-                node.DesiredDistance = radius.Clamp(2f, 150f);
+                // Gizmo.Control.DragSquare("rd", new Vector2(1, node.DesiredDistance * 0.5f), Rotation.From(0, 90, 0), out Vector3 mov);
+            }
+
+
+            using (Gizmo.Scope("DistanceControl"))
+            {
+                var t = node.GameObject.LocalTransform;
+                Gizmo.Transform = t;
+
+                Gizmo.Draw.LineCircle(Vector3.Zero, Vector3.Left, node.DesiredDistance, sections: 64);
+
+                t.Position += Vector3.Forward * (4f + node.DesiredDistance + 2f);
+                Gizmo.Transform = t;
+
+
+                // Gizmo.Settings.GizmoScale = 1f;
+                // node.DesiredDistance += mov.z;
+                // Gizmo.Control.Sphere("rd", node.DesiredDistance, out float radius, Color.Magenta);
+
+                Gizmo.Control.Arrow("rd", Vector3.Forward, out float dist, 12f, 6f, 5f);
+
+                node.DesiredDistance += dist;
+                node.DesiredDistance = node.DesiredDistance.Clamp(2f, 150f);
             }
 
             // Bones
@@ -52,8 +85,15 @@ public partial class PBodyEditorWidget
             {
                 if (!node.HasParent)
                 {
-                    var capsule = new Capsule(node.LocalPos, Target.SkeletonRoot.WorldPosition, 5f);
-                    Gizmo.Draw.LineCapsule(capsule);
+                    if (boneDisplayMode == BoneDisplayMode.Capsule)
+                    {
+                        var capsule = new Capsule(node.LocalPos, Target.SkeletonRoot.WorldPosition, 1f);
+                        Gizmo.Draw.LineCapsule(capsule);
+                    }
+                    else if (boneDisplayMode == BoneDisplayMode.Line)
+                    {
+                        Gizmo.Draw.Line(node.LocalPos, Target.SkeletonRoot.WorldPosition);
+                    }
                 }
             }
 
@@ -63,8 +103,17 @@ public partial class PBodyEditorWidget
                 for (var j = 0; j < node.Children.Count; j++)
                 {
                     var cnode = node.Children[j];
-                    var capsule = new Capsule(node.LocalPos, cnode.LocalPos, 1.5f);
-                    Gizmo.Draw.LineCapsule(capsule);
+
+                    if (boneDisplayMode == BoneDisplayMode.Capsule)
+                    {
+                        var capsule = new Capsule(node.LocalPos, cnode.LocalPos, 1.5f);
+                        Gizmo.Draw.LineCapsule(capsule);
+                    }
+                    else if (boneDisplayMode == BoneDisplayMode.Line)
+                    {
+                        // var boneLines = new Capsule(node.LocalPos, cnode.LocalPos, 1.5f);
+                        Gizmo.Draw.Line(node.LocalPos, cnode.LocalPos);
+                    }
                 }
             }
         }

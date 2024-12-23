@@ -15,6 +15,8 @@ public partial class PBodyEditorWidget : EditorTool
     private WidgetWindow window;
     private WidgetWindow editWindow;
     private Checkbox drawHandlesCheckbox;
+    private Checkbox hideOtherGizmosCheckbox;
+
     //todo brushWindow
 
     private PNode nodeSelected;
@@ -46,29 +48,36 @@ public partial class PBodyEditorWidget : EditorTool
         GridLayout btnsContainer = window.Layout.AddLayout(Layout.Grid());
         btnsContainer.Spacing = 10;
 
+
+        // Toggle Other Gizmos
+        hideOtherGizmosCheckbox = new Checkbox("Hide Other Gizmos");
+        btnsContainer.AddCell(0, 0, hideOtherGizmosCheckbox);
+
         // Add Button
         var addNodeBtn = new Button("Create Node");
         addNodeBtn.Pressed = () => AddNode();
-        btnsContainer.AddCell(0, 0, addNodeBtn);
+        btnsContainer.AddCell(0, 1, addNodeBtn);
+
+        // Clear Button
+        var clearBtn = new Button("Clear");
+        clearBtn.Pressed = () => ClearNodes();
+        btnsContainer.AddCell(0, 2, clearBtn);
+
+        // Toggle Handles
+        drawHandlesCheckbox = new Checkbox("Toggle Handles");
+        btnsContainer.AddCell(1, 0, drawHandlesCheckbox);
 
         // Refresh Button
         var refreshBtn = new Button("Refresh");
         refreshBtn.Pressed = () => RefreshNodes();
         btnsContainer.AddCell(1, 1, refreshBtn);
 
-        // Toggle Handles
-        drawHandlesCheckbox = new Checkbox("Toggle Handles");
-        btnsContainer.AddCell(1, 0, drawHandlesCheckbox);
-
-        // Clear Button
-        var clearBtn = new Button("Clear");
-        clearBtn.Pressed = () => ClearNodes();
-        btnsContainer.AddCell(0, 1, clearBtn);
 
         CreateLayout = btnsContainer;
         AddOverlay(window, TextFlag.CenterBottom, 20);
 
         CreateEditWindow();
+        
         editWindow.Enabled = false;
         editWindow.Visible = false;
         HasCreatedWindow = true;
@@ -154,7 +163,8 @@ public partial class PBodyEditorWidget : EditorTool
     {
         if (Target.IsValid())
         {
-            Target.AddNode();
+            var node = Target.AddNode();
+            Selection.Set(node.GameObject);
             UpdateNodeLabel();
         }
     }

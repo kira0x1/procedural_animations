@@ -12,7 +12,6 @@ public partial class PBodyEditorWidget
         editWindow.Layout.Margin = 14;
         editWindow.MinimumSize = new Vector2(230, 110);
 
-
         GridLayout btnsContainer = editWindow.Layout.AddLayout(Layout.Grid());
         btnsContainer.Spacing = 10;
 
@@ -25,14 +24,19 @@ public partial class PBodyEditorWidget
         deleteNodeBtn.Pressed = () => DeleteNode();
         DeleteNodeBtn = deleteNodeBtn;
 
+        var addSiblingBtn = new Button("Add Sibling");
+        addSiblingBtn.Pressed = () => AddSiblingNode();
+
+
         btnsContainer.Alignment = TextFlag.Top;
         btnsContainer.AddCell(0, 0, addChildBtn);
         btnsContainer.AddCell(1, 0, deleteNodeBtn);
+        btnsContainer.AddCell(1, 1, addSiblingBtn);
 
         AddOverlay(editWindow, TextFlag.CenterBottom, 20);
 
         var pos = editWindow.Position;
-        pos.x -= 240f;
+        pos.x -= 280f;
         editWindow.Position = pos;
     }
 
@@ -63,12 +67,20 @@ public partial class PBodyEditorWidget
     {
         if (IsNodeSelected)
         {
-            nodeSelected.AddChild();
+            var node = nodeSelected.AddChild();
+            Selection.Set(node.GameObject);
         }
         else
         {
-            Target.AddNode();
+            AddNode();
         }
+    }
+
+    private void AddSiblingNode()
+    {
+        if (!IsNodeSelected) return;
+        var node = nodeSelected.parent.AddChild();
+        Selection.Set(node.GameObject);
     }
 
     private void DeleteNode()

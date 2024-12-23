@@ -144,7 +144,7 @@ public class PNode
         GameObject.LocalPosition = position;
     }
 
-    public void AddChild()
+    public PNode AddChild()
     {
         var nodeGo = new GameObject(this.GameObject, true, $"c_node_{GameObject.Children.Count}");
         nodeGo.LocalPosition = LocalPos;
@@ -157,6 +157,7 @@ public class PNode
 
         Children.Add(node);
         Body.Descendants.Add(node);
+        return node;
     }
 
     public bool IsChild(GameObject gameObject)
