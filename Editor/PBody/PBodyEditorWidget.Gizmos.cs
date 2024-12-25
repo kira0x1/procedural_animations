@@ -12,7 +12,6 @@ public partial class PBodyEditorWidget
 {
     public BoneDisplayMode boneDisplayMode { get; set; } = BoneDisplayMode.Line;
 
-
     public override void OnUpdate()
     {
         Gizmo.Settings.GizmosEnabled = hideOtherGizmosCheckbox.State != CheckState.On;
@@ -69,7 +68,6 @@ public partial class PBodyEditorWidget
                 t.Position += Vector3.Forward * (4f + node.DesiredDistance + 2f);
                 Gizmo.Transform = t;
 
-
                 // Gizmo.Settings.GizmoScale = 1f;
                 // node.DesiredDistance += mov.z;
                 // Gizmo.Control.Sphere("rd", node.DesiredDistance, out float radius, Color.Magenta);
@@ -100,6 +98,7 @@ public partial class PBodyEditorWidget
             using (Gizmo.Scope("LeafBones"))
             {
                 Gizmo.Draw.Color = Color.Cyan;
+
                 for (var j = 0; j < node.Children.Count; j++)
                 {
                     var cnode = node.Children[j];

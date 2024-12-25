@@ -76,7 +76,7 @@
       "__guid": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
       "Flags": 0,
       "Name": "Body",
-      "Position": "-8.377206,0,23.90871",
+      "Position": "-8.377206,15.34305,26.00822",
       "Enabled": true,
       "Components": [
         {
@@ -87,7 +87,7 @@
               "Name": "node_1",
               "Position": "-16.46621,0,1.228794",
               "Rotation": {
-                "IsIdentity": true
+                "IsIdentity": false
               },
               "GameObject": {
                 "_type": "gameobject",
@@ -99,7 +99,7 @@
                 "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                 "component_type": "PBody"
               },
-              "WorldPos": "-24.84341,0,25.1375",
+              "WorldPos": "-24.84341,15.34305,27.23701",
               "LocalPos": "-16.46621,0,1.228794",
               "Id": 2,
               "DesiredDistance": 2.8288727,
@@ -110,7 +110,7 @@
                   "Name": "c_node_0",
                   "Position": "50.70876,-43.29312,-35.57814",
                   "Rotation": {
-                    "IsIdentity": true
+                    "IsIdentity": false
                   },
                   "GameObject": {
                     "_type": "gameobject",
@@ -122,7 +122,7 @@
                     "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                     "component_type": "PBody"
                   },
-                  "WorldPos": "18.44971,50.70875,-10.44064",
+                  "WorldPos": "18.44971,66.05183,-8.341129",
                   "LocalPos": "50.70876,-43.29312,-35.57814",
                   "Id": 0,
                   "DesiredDistance": 4.4053955,
@@ -134,7 +134,7 @@
                   "Name": "c_node_1",
                   "Position": "46.4155,-70.57218,-9.630291",
                   "Rotation": {
-                    "IsIdentity": true
+                    "IsIdentity": false
                   },
                   "GameObject": {
                     "_type": "gameobject",
@@ -146,7 +146,7 @@
                     "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                     "component_type": "PBody"
                   },
-                  "WorldPos": "45.72876,46.41549,15.50721",
+                  "WorldPos": "45.72878,61.75856,17.60672",
                   "LocalPos": "46.4155,-70.57218,-9.630291",
                   "Id": 1,
                   "DesiredDistance": 2.9742355,
@@ -158,7 +158,7 @@
                   "Name": "c_node_2",
                   "Position": "-42.14727,-55.58878,-15.44291",
                   "Rotation": {
-                    "IsIdentity": true
+                    "IsIdentity": false
                   },
                   "GameObject": {
                     "_type": "gameobject",
@@ -170,7 +170,7 @@
                     "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                     "component_type": "PBody"
                   },
-                  "WorldPos": "30.74537,-42.14727,9.694592",
+                  "WorldPos": "30.74537,-26.80422,11.7941",
                   "LocalPos": "-42.14727,-55.58878,-15.44291",
                   "Id": 2,
                   "DesiredDistance": 3.889511,
@@ -184,7 +184,7 @@
               "Name": "c_node_0",
               "Position": "50.70876,-43.29312,-35.57814",
               "Rotation": {
-                "IsIdentity": true
+                "IsIdentity": false
               },
               "GameObject": {
                 "_type": "gameobject",
@@ -196,7 +196,7 @@
                 "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                 "component_type": "PBody"
               },
-              "WorldPos": "18.44971,50.70875,-10.44064",
+              "WorldPos": "18.44971,66.05183,-8.341129",
               "LocalPos": "50.70876,-43.29312,-35.57814",
               "Id": 0,
               "DesiredDistance": 4.4053955,
@@ -208,7 +208,7 @@
               "Name": "c_node_1",
               "Position": "46.4155,-70.57218,-9.630291",
               "Rotation": {
-                "IsIdentity": true
+                "IsIdentity": false
               },
               "GameObject": {
                 "_type": "gameobject",
@@ -220,7 +220,7 @@
                 "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                 "component_type": "PBody"
               },
-              "WorldPos": "45.72876,46.41549,15.50721",
+              "WorldPos": "45.72878,61.75856,17.60672",
               "LocalPos": "46.4155,-70.57218,-9.630291",
               "Id": 1,
               "DesiredDistance": 2.9742355,
@@ -232,7 +232,7 @@
               "Name": "c_node_2",
               "Position": "-42.14727,-55.58878,-15.44291",
               "Rotation": {
-                "IsIdentity": true
+                "IsIdentity": false
               },
               "GameObject": {
                 "_type": "gameobject",
@@ -244,7 +244,7 @@
                 "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                 "component_type": "PBody"
               },
-              "WorldPos": "30.74537,-42.14727,9.694592",
+              "WorldPos": "30.74537,-26.80422,11.7941",
               "LocalPos": "-42.14727,-55.58878,-15.44291",
               "Id": 2,
               "DesiredDistance": 3.889511,

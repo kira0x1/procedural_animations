@@ -1,5 +1,7 @@
 ﻿namespace Kira.Procgen.Editor;
 
+using System;
+
 [EditorTool]
 [Title("PBodyEditor")]
 [Icon("boy")]
@@ -22,18 +24,28 @@ public partial class PBodyEditorWidget : EditorTool
     private PNode nodeSelected;
     private Label nodesLabel;
 
+    private static PBodyEditorWidget Instance { get; set; }
+
     public override void OnEnabled()
     {
-        CreateWindow();
+        Instance = this;
+        CreateWindow(true);
     }
 
-    private void CreateWindow()
+    private void CreateWindow(bool firstTime = false)
     {
-        window = new WidgetWindow(SceneOverlay, "Body");
-        window.Layout = Layout.Column();
-        window.Layout.Spacing = 16;
-        window.Layout.Margin = 14;
-        window.MinimumSize = new Vector2(230, 110);
+        if (firstTime)
+        {
+            window = new WidgetWindow(SceneOverlay, "Body");
+            window.Layout = Layout.Column();
+            window.Layout.Spacing = 16;
+            window.Layout.Margin = 14;
+            window.MinimumSize = new Vector2(360, 110);
+        }
+        else
+        {
+            window.Layout.Clear(true);
+        }
 
         var curSelection = GetSelectedComponent<PBody>();
         if (curSelection.IsValid())
@@ -43,44 +55,103 @@ public partial class PBodyEditorWidget : EditorTool
         }
 
         nodesLabel = new Label($"Nodes: {NodeCount}");
+
         window.Layout.Add(nodesLabel);
 
-        GridLayout btnsContainer = window.Layout.AddLayout(Layout.Grid());
-        btnsContainer.Spacing = 10;
+        // Display Selection
+        var boneSelection = CreateBoneSelectionWidget();
+        window.Layout.Add(boneSelection);
 
+        #region Checkboxes
+
+        // -- CHECKBOXES --
+        var checkboxContainer = window.Layout.AddLayout(Layout.Grid());
+        checkboxContainer.Spacing = 8;
+
+        // SEPERATOR
+        window.Layout.AddSeparator(true);
 
         // Toggle Other Gizmos
+
         hideOtherGizmosCheckbox = new Checkbox("Hide Other Gizmos");
-        btnsContainer.AddCell(0, 0, hideOtherGizmosCheckbox);
+        checkboxContainer.AddCell(0, 0, hideOtherGizmosCheckbox);
+
+        // Toggle Handles
+        drawHandlesCheckbox = new Checkbox("Toggle Handles");
+        checkboxContainer.AddCell(1, 0, drawHandlesCheckbox);
+
+        var boneGizmoMode = new Checkbox("Bone Display", window);
+        checkboxContainer.AddCell(0, 1, boneGizmoMode);
+
+        #endregion
+
+        #region Buttons
+
+        // -- BUTTONS --
+        GridLayout btnsContainer = window.Layout.AddLayout(Layout.Grid());
+        btnsContainer.Spacing = 10;
 
         // Add Button
         var addNodeBtn = new Button("Create Node");
         addNodeBtn.Pressed = () => AddNode();
-        btnsContainer.AddCell(0, 1, addNodeBtn);
+        btnsContainer.AddCell(0, 0, addNodeBtn);
 
         // Clear Button
         var clearBtn = new Button("Clear");
         clearBtn.Pressed = () => ClearNodes();
-        btnsContainer.AddCell(0, 2, clearBtn);
-
-        // Toggle Handles
-        drawHandlesCheckbox = new Checkbox("Toggle Handles");
-        btnsContainer.AddCell(1, 0, drawHandlesCheckbox);
+        btnsContainer.AddCell(0, 1, clearBtn);
 
         // Refresh Button
         var refreshBtn = new Button("Refresh");
         refreshBtn.Pressed = () => RefreshNodes();
-        btnsContainer.AddCell(1, 1, refreshBtn);
-
+        btnsContainer.AddCell(1, 0, refreshBtn);
 
         CreateLayout = btnsContainer;
-        AddOverlay(window, TextFlag.CenterBottom, 20);
 
-        CreateEditWindow();
-        
-        editWindow.Enabled = false;
-        editWindow.Visible = false;
+        #endregion
+
+        if (firstTime)
+        {
+            AddOverlay(window, TextFlag.CenterBottom, 20);
+            CreateEditWindow();
+            editWindow.Enabled = false;
+            editWindow.Visible = false;
+        }
+
         HasCreatedWindow = true;
+    }
+
+    private Widget CreateBoneSelectionWidget()
+    {
+        var layout = Layout.Row();
+        var sc = layout.Add(new SegmentedControl());
+        sc.AddOption("Lines");
+        sc.AddOption("Capsules");
+
+        sc.SelectedIndex = (int)boneDisplayMode;
+
+        sc.OnSelectedChanged = s =>
+        {
+            if (s == "Capsules")
+            {
+                boneDisplayMode = BoneDisplayMode.Capsule;
+            }
+            else if (s == "Lines")
+            {
+                boneDisplayMode = BoneDisplayMode.Line;
+            }
+        };
+
+        sc.MaximumWidth = 200;
+        sc.HorizontalSizeMode = SizeMode.CanGrow;
+
+        return sc;
+    }
+
+    [EditorEvent.Hotload]
+    public static void Rebuild()
+    {
+        Instance.CreateWindow(false);
     }
 
     private void UpdateNodeLabel()
