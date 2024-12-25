@@ -23,9 +23,14 @@ public partial class PBodyEditorWidget
 
         using (Gizmo.Scope("RootControl"))
         {
-            Gizmo.Transform = new Transform(Target.WorldPosition);
-            Gizmo.Control.Position("rootPos", Target.LocalPosition, out Vector3 rootPos);
-            Target.WorldPosition = rootPos;
+            var selection = Selection.FirstOrDefault();
+            GameObject s = (GameObject)selection;
+            if (selection != null && s.Name == Target.GameObject.Name)
+            {
+                Gizmo.Transform = new Transform(Target.WorldPosition);
+                Gizmo.Control.Position("rootPos", Target.LocalPosition, out Vector3 rootPos);
+                Target.WorldPosition = rootPos;
+            }
         }
 
         for (var i = 0; i < Target.Descendants.Count; i++)
@@ -36,12 +41,12 @@ public partial class PBodyEditorWidget
             using (Gizmo.Scope($"node{i}"))
             {
                 node.DrawGizmos();
-                Gizmo.Transform = new Transform(node.Position, Rotation.Identity);
+                Gizmo.Transform = node.GameObject.LocalTransform;
                 Gizmo.Draw.Color = Gizmo.HasSelected ? Color.Cyan : Color.White;
 
                 if (drawHandlesCheckbox.Value || Selection.Contains(node.GameObject))
                 {
-                    Gizmo.Control.Position("pos", node.Position, out Vector3 newPos, squareSize: 2.5f);
+                    Gizmo.Control.Position("pos", node.LocalPos, out Vector3 newPos, squareSize: 2.5f);
 
                     // this is so that we can still make changes to gameobjects position in the inspector
                     if (newPos != node.Position)
@@ -62,21 +67,23 @@ public partial class PBodyEditorWidget
             {
                 var t = node.GameObject.LocalTransform;
                 Gizmo.Transform = t;
+                if (ShowDistanceRadius.State == CheckState.On)
+                {
+                    Gizmo.Draw.LineCircle(Vector3.Zero, Vector3.Left, node.DesiredDistance, sections: 64);
+                }
 
-                Gizmo.Draw.LineCircle(Vector3.Zero, Vector3.Left, node.DesiredDistance, sections: 64);
+                if (ShowDistanceControl.State == CheckState.On && IsNodeSelected && nodeSelected.Id == node.Id)
+                {
+                    var dx = Gizmo.Camera.ToWorld(t.Position);
+                    var offsetArrow = dx.Length / 8f;
+                    offsetArrow += node.DesiredDistance / 1.2f;
+                    Gizmo.Control.Arrow("rd", Vector3.Forward, out float dist, 8f, 6f, offsetArrow);
 
-                t.Position += Vector3.Forward * (4f + node.DesiredDistance + 2f);
-                Gizmo.Transform = t;
-
-                // Gizmo.Settings.GizmoScale = 1f;
-                // node.DesiredDistance += mov.z;
-                // Gizmo.Control.Sphere("rd", node.DesiredDistance, out float radius, Color.Magenta);
-
-                Gizmo.Control.Arrow("rd", Vector3.Forward, out float dist, 12f, 6f, 5f);
-
-                node.DesiredDistance += dist;
-                node.DesiredDistance = node.DesiredDistance.Clamp(2f, 150f);
+                    node.DesiredDistance += dist;
+                    node.DesiredDistance = node.DesiredDistance.Clamp(2f, 150f);
+                }
             }
+
 
             // Bones
             using (Gizmo.Scope("Bone"))
@@ -85,7 +92,7 @@ public partial class PBodyEditorWidget
                 {
                     if (boneDisplayMode == BoneDisplayMode.Capsule)
                     {
-                        var capsule = new Capsule(node.LocalPos, Target.SkeletonRoot.WorldPosition, 1f);
+                        var capsule = new Capsule(node.GameObject.LocalPosition, Target.SkeletonRoot.WorldPosition, 1f);
                         Gizmo.Draw.LineCapsule(capsule);
                     }
                     else if (boneDisplayMode == BoneDisplayMode.Line)

@@ -128,7 +128,7 @@ public partial class PBodyEditorWidget : EditorTool
         sc.AddOption("Lines");
         sc.AddOption("Capsules");
 
-        sc.SelectedIndex = (int)boneDisplayMode;
+        sc.Selected = boneDisplayMode == BoneDisplayMode.Capsule ? "Capsules" : "Lines";
 
         sc.OnSelectedChanged = s =>
         {

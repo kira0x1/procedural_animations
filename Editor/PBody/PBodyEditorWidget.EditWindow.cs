@@ -3,6 +3,8 @@
 public partial class PBodyEditorWidget
 {
     private Button DeleteNodeBtn { get; set; }
+    private Checkbox ShowDistanceControl { get; set; }
+    private Checkbox ShowDistanceRadius { get; set; }
 
     private void CreateEditWindow()
     {
@@ -11,6 +13,13 @@ public partial class PBodyEditorWidget
         editWindow.Layout.Spacing = 16;
         editWindow.Layout.Margin = 14;
         editWindow.MinimumSize = new Vector2(230, 110);
+
+        var checkboxContainer = editWindow.Layout.AddColumn();
+
+        ShowDistanceControl = new Checkbox("Show Distance Control");
+        ShowDistanceRadius = new Checkbox("Show Distance Radius");
+        checkboxContainer.Add(ShowDistanceControl);
+        checkboxContainer.Add(ShowDistanceRadius);
 
         GridLayout btnsContainer = editWindow.Layout.AddLayout(Layout.Grid());
         btnsContainer.Spacing = 10;
@@ -27,11 +36,11 @@ public partial class PBodyEditorWidget
         var addSiblingBtn = new Button("Add Sibling");
         addSiblingBtn.Pressed = () => AddSiblingNode();
 
-
         btnsContainer.Alignment = TextFlag.Top;
         btnsContainer.AddCell(0, 0, addChildBtn);
         btnsContainer.AddCell(1, 0, deleteNodeBtn);
         btnsContainer.AddCell(1, 1, addSiblingBtn);
+
 
         AddOverlay(editWindow, TextFlag.CenterBottom, 20);
 
@@ -79,6 +88,7 @@ public partial class PBodyEditorWidget
     private void AddSiblingNode()
     {
         if (!IsNodeSelected) return;
+        if (nodeSelected.parent == null) return;
         var node = nodeSelected.parent.AddChild();
         Selection.Set(node.GameObject);
     }
