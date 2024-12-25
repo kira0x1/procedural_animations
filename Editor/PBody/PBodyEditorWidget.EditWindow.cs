@@ -36,7 +36,7 @@ public partial class PBodyEditorWidget
         AddOverlay(editWindow, TextFlag.CenterBottom, 20);
 
         var pos = editWindow.Position;
-        pos.x -= 280f;
+        pos.x -= 320f;
         editWindow.Position = pos;
     }
 
