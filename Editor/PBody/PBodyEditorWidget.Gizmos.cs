@@ -38,7 +38,8 @@ public partial class PBodyEditorWidget
             PNode node = Target.Descendants[i];
             if (node == null) return;
 
-            using (Gizmo.Scope($"node{i}"))
+            // NODE MOVEMENT CONTROL
+            using (Gizmo.Scope($"node {node.GameObject.Id}"))
             {
                 node.DrawGizmos();
                 Gizmo.Transform = node.GameObject.LocalTransform;
@@ -52,21 +53,23 @@ public partial class PBodyEditorWidget
                     if (newPos != node.Position)
                     {
                         node.SetPosition(newPos);
+                        node.RelaxedPosition = newPos;
                     }
                     else
                     {
                         node.Position = node.GameObject.LocalPosition;
+                        node.RelaxedPosition = node.Position;
                     }
                 }
-
-                // Gizmo.Control.DragSquare("rd", new Vector2(1, node.DesiredDistance * 0.5f), Rotation.From(0, 90, 0), out Vector3 mov);
             }
 
 
+            // DISTANCE RADIUS CONTROL
             using (Gizmo.Scope($"DistanceControl{i}"))
             {
                 var t = node.GameObject.LocalTransform;
                 Gizmo.Transform = t;
+
                 if (ShowDistanceRadius.State == CheckState.On)
                 {
                     Gizmo.Draw.LineCircle(Vector3.Zero, Vector3.Left, node.DesiredDistance, sections: 64);
@@ -85,7 +88,7 @@ public partial class PBodyEditorWidget
             }
 
 
-            // Bones
+            // BONES
             using (Gizmo.Scope("Bone"))
             {
                 if (!node.HasParent)
@@ -102,6 +105,8 @@ public partial class PBodyEditorWidget
                 }
             }
 
+
+            // CHILD_NODE BONES
             using (Gizmo.Scope("LeafBones"))
             {
                 Gizmo.Draw.Color = Color.Cyan;

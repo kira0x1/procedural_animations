@@ -1,20 +1,14 @@
 ﻿namespace Kira.Procgen;
 
+using System;
 using System.Numerics;
 using Vector3 = Vector3;
-
-public struct NodeData
-{
-    public int Id { get; set; }
-    public Vector3 Position { get; set; }
-    public bool HasParent { get; set; }
-    public PNode Parent { get; set; }
-}
 
 public class PNode
 {
     public string Name => GameObject.Name;
     public Vector3 Position { get; set; }
+    public Vector3 RelaxedPosition { get; set; }
     public Quaternion Rotation { get; set; }
     public GameObject GameObject { get; set; }
     public PBody Body { get; set; }
@@ -29,8 +23,12 @@ public class PNode
     public PNode parent;
     public string NodeName { get; set; }
 
-
     public List<PNode> Children { get; set; } = new List<PNode>();
+    public Action OnParentMoved;
+
+    public PNode()
+    {
+    }
 
     public PNode(GameObject gameObject, PBody body, int id = 0)
     {
@@ -38,6 +36,41 @@ public class PNode
         this.Body = body;
         this.GameObject = gameObject;
     }
+
+    public void Move(Vector3 translate)
+    {
+        GameObject.LocalTransform.Add(translate, false);
+        OnParentMoved?.Invoke();
+
+        // foreach (PNode pNode in Children)
+        // {
+        //     pNode.OnParentMoved();
+        // }
+    }
+
+    public void MoveTo(Vector3 pos)
+    {
+        GameObject.LocalPosition = pos;
+
+        // foreach (PNode pNode in Children)
+        // {
+        //     pNode.OnParentMoved();
+        // }
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        Position = position;
+        GameObject.LocalPosition = position;
+        OnParentMoved?.Invoke();
+    }
+
+    public void OnParentHasMoved()
+    {
+        // update position
+        UpdatePosition();
+    }
+
 
     public void RefreshChildren()
     {
@@ -49,9 +82,6 @@ public class PNode
         }
     }
 
-    public PNode()
-    {
-    }
 
     public void GenerateName()
     {
@@ -61,6 +91,8 @@ public class PNode
     public void SetParent(PNode parent)
     {
         this.parent = parent;
+        RelaxedPosition = LocalPos;
+        parent.OnParentMoved += OnParentHasMoved;
         HasParent = true;
     }
 
@@ -92,7 +124,7 @@ public class PNode
     private Vector3 GetAnchorPoint()
     {
         var center = GameObject.LocalPosition;
-        var dir = Vector3.Direction(GameObject.LocalPosition, GameObject.Parent.LocalPosition);
+        var dir = Vector3.Direction(RelaxedPosition, GameObject.Parent.LocalPosition);
         Vector3 res = dir * DesiredDistance;
         var anchorPoint = center + res;
         return anchorPoint;
@@ -104,45 +136,35 @@ public class PNode
     public void UpdatePosition()
     {
         var pos = GameObject.LocalPosition;
-        var anchor = Body;
-        var dir = Vector3.Direction(GetAnchorPoint(), anchor.LocalPosition);
-        // var targetPos = anchor.position - dir * desiredDistance * 2f;
+        var anchor = HasParent ? parent.LocalPos : GameObject.Parent.LocalPosition;
+        var dir = Vector3.Direction(GetAnchorPoint(), anchor);
+        // var targetPos = anchor - dir * DesiredDistance * 2f;
 
-        const float offset = 1f;
-        var targetPos = anchor.LocalPosition - dir * (DesiredDistance * offset + 1f);
+        const float offset = 2f;
+        var targetPos = anchor - dir * (DesiredDistance * offset + 1f);
 
-        Gizmo.Draw.Arrow(pos, targetPos, 2f, 1f);
-        // Gizmo.Draw.LineSphere(targetPos, 1f);
+        using (Gizmo.Scope("nodepos"))
+        {
+            Gizmo.Transform = GameObject.LocalTransform;
 
+            Gizmo.Draw.Arrow(pos, GameObject.LocalTransform.PointToLocal(targetPos), 2f, 1f);
+            Gizmo.Draw.LineSphere(targetPos, 1f);
+        }
 
-        float dist = Vector3.DistanceBetween(pos.WithX(0f), anchor.LocalPosition.WithX(0f));
+        float dist = Vector3.DistanceBetween(pos, anchor);
 
         if (dist < DesiredDistance)
         {
-            pos = anchor.LocalPosition - dir * DesiredDistance;
+            pos = anchor - dir * DesiredDistance;
         }
 
         const float Speed = 2f;
-        Position = Vector3.Lerp(pos, targetPos, Speed * Time.Delta);
+        SetPosition(Vector3.Lerp(pos, targetPos, Speed * Time.Delta));
     }
 
     public void DrawGizmos()
     {
         float fontSize = HasParent ? 16f : 22f;
-
-        using (Gizmo.Scope("lines"))
-        {
-            if (!HasParent)
-            {
-                // Gizmo.Draw.Line(LocalPos, Body.SkeletonRoot.WorldPosition);
-            }
-
-            foreach (PNode cnode in Children)
-            {
-                // Gizmo.Draw.Line(LocalPos, cnode.LocalPos);
-            }
-        }
-
 
         using (Gizmo.Scope("node_text"))
         {
@@ -154,12 +176,6 @@ public class PNode
         {
             node.DrawGizmos();
         }
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        Position = position;
-        GameObject.LocalPosition = position;
     }
 
     public PNode AddChild()
@@ -199,5 +215,14 @@ public class PNode
     public PNode GetChild(GameObject gameObject)
     {
         return Children.Find(c => c.GameObject == gameObject);
+    }
+
+    /// <summary>
+    /// Sets node back to relaxed positions
+    /// </summary>
+    public void ResetPosition()
+    {
+        GameObject.LocalPosition = RelaxedPosition;
+        Position = GameObject.LocalPosition;
     }
 }

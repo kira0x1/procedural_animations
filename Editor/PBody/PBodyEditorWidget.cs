@@ -106,6 +106,11 @@ public partial class PBodyEditorWidget : EditorTool
         refreshBtn.Pressed = () => RefreshNodes();
         btnsContainer.AddCell(1, 0, refreshBtn);
 
+        // Reset Positions | Sets nodes back to relaxed positions
+        var resetPositions = new Button("Reset Positions");
+        resetPositions.Pressed = () => ResetNodePositions();
+        btnsContainer.AddCell(1, 1, resetPositions);
+
         CreateLayout = btnsContainer;
 
         #endregion
@@ -119,6 +124,17 @@ public partial class PBodyEditorWidget : EditorTool
         }
 
         HasCreatedWindow = true;
+    }
+
+    /// <summary>
+    /// Sets nodes back to relaxed positions 
+    /// </summary>
+    private void ResetNodePositions()
+    {
+        foreach (PNode node in Target.Descendants)
+        {
+            node.ResetPosition();
+        }
     }
 
     private Widget CreateBoneSelectionWidget()
