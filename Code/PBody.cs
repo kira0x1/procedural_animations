@@ -22,7 +22,6 @@ public sealed class PBody : Component
     /// </summary>
     public void Init()
     {
-        // if (SkeletonRoot.IsValid()) return;
         var skel = GameObject.Children.Find(c => c.Name == "skeleton");
         if (!skel.IsValid() && GameObject.Children.Count >= 1)
         {
@@ -78,6 +77,7 @@ public sealed class PBody : Component
             pn.Rotation = node.LocalRotation;
             pn.GameObject = node;
 
+            pn.RefreshChildren();
             Descendants.Add(pn);
         }
     }

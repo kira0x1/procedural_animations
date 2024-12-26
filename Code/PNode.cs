@@ -3,6 +3,14 @@
 using System.Numerics;
 using Vector3 = Vector3;
 
+public struct NodeData
+{
+    public int Id { get; set; }
+    public Vector3 Position { get; set; }
+    public bool HasParent { get; set; }
+    public PNode Parent { get; set; }
+}
+
 public class PNode
 {
     public string Name => GameObject.Name;
@@ -29,6 +37,16 @@ public class PNode
         this.Id = id;
         this.Body = body;
         this.GameObject = gameObject;
+    }
+
+    public void RefreshChildren()
+    {
+        Children.Clear();
+        foreach (GameObject go in GameObject.Children)
+        {
+            var res = AddChildFromGameObject(go);
+            res.RefreshChildren();
+        }
     }
 
     public PNode()
@@ -149,6 +167,19 @@ public class PNode
         var nodeGo = new GameObject(this.GameObject, true, $"c_node_{GameObject.Children.Count}");
         nodeGo.LocalPosition = LocalPos;
 
+        var node = new PNode(nodeGo, Body, Children.Count);
+        node.Position = nodeGo.LocalPosition;
+        node.Rotation = nodeGo.LocalRotation;
+        node.GameObject = nodeGo;
+        node.SetParent(this);
+
+        Children.Add(node);
+        Body.Descendants.Add(node);
+        return node;
+    }
+
+    public PNode AddChildFromGameObject(GameObject nodeGo)
+    {
         var node = new PNode(nodeGo, Body, Children.Count);
         node.Position = nodeGo.LocalPosition;
         node.Rotation = nodeGo.LocalRotation;

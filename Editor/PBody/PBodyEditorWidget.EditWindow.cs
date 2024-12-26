@@ -3,6 +3,7 @@
 public partial class PBodyEditorWidget
 {
     private Button DeleteNodeBtn { get; set; }
+    private Button AddSiblingBtn { get; set; }
     private Checkbox ShowDistanceControl { get; set; }
     private Checkbox ShowDistanceRadius { get; set; }
 
@@ -35,6 +36,7 @@ public partial class PBodyEditorWidget
 
         var addSiblingBtn = new Button("Add Sibling");
         addSiblingBtn.Pressed = () => AddSiblingNode();
+        AddSiblingBtn = addSiblingBtn;
 
         btnsContainer.Alignment = TextFlag.Top;
         btnsContainer.AddCell(0, 0, addChildBtn);
@@ -62,11 +64,14 @@ public partial class PBodyEditorWidget
         if (!IsNodeSelected && DeleteNodeBtn.IsValid())
         {
             DeleteNodeBtn.Enabled = false;
+            AddSiblingBtn.Enabled = false;
         }
         else if (IsNodeSelected)
         {
             DeleteNodeBtn.Enabled = true;
+            AddSiblingBtn.Enabled = nodeSelected.parent != null || nodeSelected.GameObject.Parent.Name == "skeleton";
         }
+
 
         editWindow.WindowTitle = IsNodeSelected ? $"Edit: {nodeSelected.Name}" : $"Edit";
         editWindow.Update();
@@ -87,8 +92,24 @@ public partial class PBodyEditorWidget
 
     private void AddSiblingNode()
     {
-        if (!IsNodeSelected) return;
-        if (nodeSelected.parent == null) return;
+        if (!IsNodeSelected)
+        {
+            Log.Warning("cant add sibling, select a node first");
+            return;
+        }
+
+        if (nodeSelected.parent == null)
+        {
+            if (nodeSelected.GameObject.Parent.Name == "skeleton")
+            {
+                AddNode();
+                return;
+            }
+
+            Log.Warning($"cant add sibling, {nodeSelected.Name} does not have a parent");
+            return;
+        }
+
         var node = nodeSelected.parent.AddChild();
         Selection.Set(node.GameObject);
     }
