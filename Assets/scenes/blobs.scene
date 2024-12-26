@@ -102,7 +102,7 @@
               "WorldPos": "-36.02871,0,23.86756",
               "LocalPos": "-25.07021,0,12.4322",
               "Id": 1,
-              "DesiredDistance": 4,
+              "DesiredDistance": 7.6588326,
               "HasParent": false,
               "NodeName": null,
               "Children": []
@@ -126,7 +126,7 @@
               "WorldPos": "-10.9585,0,31.45431",
               "LocalPos": "0,0,20.01895",
               "Id": 1,
-              "DesiredDistance": 4,
+              "DesiredDistance": 7.415619,
               "HasParent": false,
               "NodeName": null,
               "Children": []
@@ -150,14 +150,14 @@
               "WorldPos": "-7.208074,0,-2.689696",
               "LocalPos": "-4.13858,0,-8.213719",
               "Id": 0,
-              "DesiredDistance": 4,
+              "DesiredDistance": 3.260931,
               "HasParent": true,
               "NodeName": null,
               "Children": []
             },
             {
               "Name": "c_node_1",
-              "Position": "-1.501578,0,-29.17743",
+              "Position": "5.28655,0,-23.94663",
               "Rotation": {
                 "IsIdentity": true
               },
@@ -171,10 +171,10 @@
                 "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                 "component_type": "PBody"
               },
-              "WorldPos": "-4.571073,0,-23.6534",
-              "LocalPos": "-1.501578,0,-29.17743",
+              "WorldPos": "2.217055,0,-18.42261",
+              "LocalPos": "5.28655,0,-23.94663",
               "Id": 1,
-              "DesiredDistance": 4,
+              "DesiredDistance": 8.959473,
               "HasParent": true,
               "NodeName": null,
               "Children": []
@@ -198,7 +198,7 @@
               "WorldPos": "-3.069494,0,5.524024",
               "LocalPos": "7.889001,0,-5.911336",
               "Id": 1,
-              "DesiredDistance": 4,
+              "DesiredDistance": 8.246887,
               "HasParent": false,
               "NodeName": null,
               "Children": [
@@ -221,14 +221,14 @@
                   "WorldPos": "-7.208074,0,-2.689696",
                   "LocalPos": "-4.13858,0,-8.213719",
                   "Id": 0,
-                  "DesiredDistance": 4,
+                  "DesiredDistance": 3.260931,
                   "HasParent": true,
                   "NodeName": null,
                   "Children": []
                 },
                 {
                   "Name": "c_node_1",
-                  "Position": "-1.501578,0,-29.17743",
+                  "Position": "5.28655,0,-23.94663",
                   "Rotation": {
                     "IsIdentity": true
                   },
@@ -242,10 +242,10 @@
                     "go": "5df01c42-d0ec-4f30-8e08-14b023ce6b79",
                     "component_type": "PBody"
                   },
-                  "WorldPos": "-4.571073,0,-23.6534",
-                  "LocalPos": "-1.501578,0,-29.17743",
+                  "WorldPos": "2.217055,0,-18.42261",
+                  "LocalPos": "5.28655,0,-23.94663",
                   "Id": 1,
-                  "DesiredDistance": 4,
+                  "DesiredDistance": 8.959473,
                   "HasParent": true,
                   "NodeName": null,
                   "Children": []
@@ -298,7 +298,7 @@
                   "__guid": "db963558-4c27-49ed-8a30-40fac6bc95c9",
                   "Flags": 0,
                   "Name": "c_node_1",
-                  "Position": "-1.501578,0,-29.17743",
+                  "Position": "5.28655,0,-23.94663",
                   "Enabled": true
                 }
               ]

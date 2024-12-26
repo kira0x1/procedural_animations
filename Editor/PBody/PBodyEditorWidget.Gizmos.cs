@@ -63,7 +63,7 @@ public partial class PBodyEditorWidget
             }
 
 
-            using (Gizmo.Scope("DistanceControl"))
+            using (Gizmo.Scope($"DistanceControl{i}"))
             {
                 var t = node.GameObject.LocalTransform;
                 Gizmo.Transform = t;
@@ -80,7 +80,7 @@ public partial class PBodyEditorWidget
                     Gizmo.Control.Arrow("rd", Vector3.Forward, out float dist, 8f, 6f, offsetArrow);
 
                     node.DesiredDistance += dist;
-                    node.DesiredDistance = node.DesiredDistance.Clamp(2f, 150f);
+                    node.DesiredDistance = node.DesiredDistance.Clamp(1f, 12f);
                 }
             }
 
